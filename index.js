@@ -10,11 +10,8 @@ var form = document.getElementById('formClass');
 // Evento para el botón "Start"
 document.getElementById("startBtn").addEventListener("click", function() {
     if (!started) {
-        document.getElementById("level-title").textContent = "Level " + level;
-        started = true;
-        setTimeout(function() {
-            nextSequence();
-        }, 750); //Tiempo a que se encienda el boton
+        var sectionForm = document.getElementById('enterName');
+        sectionForm.classList.remove('hide');
     }
 });
 
@@ -30,7 +27,7 @@ document.getElementById("resetBtn").addEventListener("click", function() {
 });
 
 // Eventos para los botones de colores
-var buttons = document.querySelectorAll(".btn");
+var buttons = document.querySelectorAll(".btnSimon");
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function() {
         if (started) {
@@ -41,6 +38,14 @@ for (var i = 0; i < buttons.length; i++) {
             animatePress(userChosenColor);
 
             checkAnswer(userClickedPattern.length - 1);
+
+            //----- Score ----- 
+            //Me permite que no se agregue 100+ cuando se equivoca
+            var bodyElement = document.body;
+            if (!bodyElement.classList.contains("game-over")) {
+                userScore += 100;
+                document.getElementById('score').innerHTML = "Score: " + userScore;
+            }
         }
     });
 }
